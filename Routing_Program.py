@@ -4,7 +4,6 @@ from tkinter import messagebox
 from datetime import date
 import sqlite3
 import os
-import pandas as pd
 import csv
 
 root = Tk()
@@ -46,6 +45,8 @@ ship_days= [
 	"Friday",
 	"Saturday"
 ]
+
+Rout_num_list = []
 
 Mon_day_route_list = ["110","112","116","119","115","114","117","113","146",
 						"145","121","103","104","105","107","120","108",
@@ -92,6 +93,7 @@ def P2():
 	routing_frame.grid(row=0, column=0)
 
 #This function confirms the selection of the routing day selected
+#This function also selects the list for the routing program
 def choose_day_button():
 	global response
 	response = messagebox.askyesno('Confirm Day', 'You have selected ' + day_selected.get() +', is this the correct day?')
@@ -102,6 +104,20 @@ def choose_day_button():
 		P2()
 	else:
 		messagebox.showinfo('Incorrect day', 'Please select the correct day')
+
+	if day_selected == 'Monday':
+		Rout_num_list = Mon_day_route_list.copy()
+	elif day_selected == 'Tuesday':
+		Rout_num_list = Tues_day_route_list.copy()
+	elif day_selected == 'Wednesday':
+		Rout_num_list = Wed_day_route_list.copy()
+	elif day_selected == 'Thursday':
+		Rout_num_list = Thurs_day_route_list.copy()
+	elif day_selected == 'Friday':
+		Rout_num_list = Fri_day_route_list.copy()
+
+	#print(Rout_num_list)
+
 
 #This functions allows you to return to the main frame while in the routing frame
 def day_return():
@@ -129,27 +145,23 @@ x=1
 while x	< 51:
 	route_var = str("RTV" + str(x))
 	#t = str("RT" + str(x))
-	t = Checkbutton(routing_frame, text=x + , variable=route_var, onvalue="R", offvalue="DR")
+	t = Checkbutton(routing_frame, text=x, variable=route_var, onvalue="R", offvalue="DR")
 	t.deselect()
 	
-	#This if statement created the first column
-	if x < 11:
+	
+	if x < 11: #This if statement created the first column
 		#col1 = 1
 		t.grid(row=x + 2, column=1)
-	#This if statement creates the second column
-	if x < 21 and x > 10:
+	elif x < 21 and x > 10: #This if statement creates the second column
 		#col2 = 3
 		t.grid(row=x - 8, column=2)
-	#This if statement creates the third column
-	if x < 31 and x > 20:
+	elif x < 31 and x > 20: #This if statement creates the third column
 		#col3 = 5
 		t.grid(row=x - 18, column=3)
-	#This if statement creates the fourth column
-	if x < 41 and x > 30:
+	elif x < 41 and x > 30: #This if statement creates the fourth column
 		#col4 = 7
 		t.grid(row=x - 28, column=4)
-	#This if statement creates the firth column
-	if x < 51 and x > 40:
+	elif x < 51 and x > 40: #This if statement creates the firth column
 		#col5 = 9
 		t.grid(row=x - 38, column=5)
 	
